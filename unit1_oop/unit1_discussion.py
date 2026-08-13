@@ -24,8 +24,16 @@ from copy import copy, deepcopy
 #
 # Replace the pass statement with your implementation.
 
-class ParentClass:
-    pass
+class Book:
+    book_type = 'Paper Back'
+
+    def __init__(self, title: str , author: str, pages: int):
+        self.title = title
+        self.author= author
+        self.pages = pages
+
+    def book_info(self):
+        return f"title: {self.title} | Author {self.author} | page Number {self.pages}"
 
 
 # TODO 2:
@@ -40,8 +48,31 @@ class ParentClass:
 #
 # Replace the pass statement with your implementation.
 
-class ChildClass(ParentClass):
-    pass
+class Ebook(Book):
+
+    device = 'Laptop'
+
+    def __init__(self, title:str, author:str, pages: int, file_type: str, website: str, access_history: str):
+        super().__init__(title, author, pages)
+
+
+        self.file_type = file_type
+        self.website = website
+
+
+        if access_history is None:
+            self.access_history = ["downloaded"]
+        else:
+            self.access_history= access_history
+
+        def book_info(self):
+            return f"Title: {self.title} | Author: {self.author} | page count: {self.pages} | File Type: {self.file_type} | website: {self.website}"
+
+
+        def read_book(self):
+            return f"you can read {self.title} on a {self.device}"
+
+
 
 
 # TODO 3:
@@ -57,8 +88,24 @@ class ChildClass(ParentClass):
 
 def demonstrate_namespaces():
     print("\n=== Namespace Demonstration ===")
-    print("TODO: Implement namespace demonstration")
 
+    ebook1 = Ebook("harry potter", "J.K Rowling", 320, "PDF", "books.com")
+    ebook2 = Ebook("Lord of the Rings", "J.R.R. tolkien", 500, "word", "Goodbooks.com")
+
+    print(f"Book accesses useing this device: {Ebook.device} ")
+    print(f"ebook1 accesses via this device: {ebook1.device}")
+
+    ebook1.bookmark = 75
+    print(f"this is a bookmark i added to ebook1")
+
+    print("ebook1 Instance Namespace: ")
+    print(ebook1.__dict__)
+
+    print("ebook2 isntanse namespace: ")
+    print(ebook2.__dict__)
+
+    print("Class namespace: ")
+    print(list(ebook1.__dict__.keys()))
 
 # TODO 4:
 # Create a function that demonstrates shallow copying and deep copying.
@@ -75,7 +122,22 @@ def demonstrate_copying():
     print("\n=== Copy Demonstration ===")
     print("TODO: Implement shallow copy and deep copy demonstration")
 
+def copying():
 
+    orignial = {
+        "title": "python",
+        "author": ['bob', 'jim'],
+        "details": {
+            'pages': 400,
+            'genre': ["education", "programming"]}
+    }
+
+    deep_copy = copy.copy(orignial)
+
+    orignial['author'].append("john")
+    orignial['details']['genre'].append("computer")
+
+    print(orignial)
 # TODO 5:
 # Complete the main function.
 #
@@ -86,12 +148,18 @@ def demonstrate_copying():
 # - Call your namespace demonstration function.
 # - Call your copy demonstration function.
 
+
 def main():
     print("=== Unit 1 OOP Assignment ===")
 
     print("\nTODO: Create and test your parent object")
+    book1 = Book("the hobbit", "J.R.R Tolkien", 310)
+
+    print(book1.book_info())
+    print(f"book type: {Book.book_type}")
 
     print("\nTODO: Create and test your child object")
+
 
     demonstrate_namespaces()
     demonstrate_copying()
