@@ -10,7 +10,7 @@ analyze the code to demonstrate understanding of inheritance, namespaces, and ob
 """
 
 
-from copy import copy, deepcopy
+from copy import copy
 
 
 # TODO 1:
@@ -119,25 +119,24 @@ def demonstrate_namespaces():
 # - Use comments to explain the difference between shallow and deep copying.
 
 def demonstrate_copying():
-    print("\n=== Copy Demonstration ===")
-    print("TODO: Implement shallow copy and deep copy demonstration")
-
-def copying():
 
     orignial = {
         "title": "python",
         "author": ['bob', 'jim'],
         "details": {
             'pages': 400,
-            'genre': ["education", "programming"]}
+            'genre': ["education", "programming"]
+        }
     }
 
-    deep_copy = copy.copy(orignial)
+    shallow_copy = copy(orignial)
 
-    orignial['author'].append("john")
-    orignial['details']['genre'].append("computer")
+    orignial["author"].append("john")
+    orignial["details"]["genre"].append("computer")
 
     print(orignial)
+    print(shallow_copy)
+
 # TODO 5:
 # Complete the main function.
 #
