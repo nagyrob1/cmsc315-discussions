@@ -150,7 +150,7 @@ def main():
     # deleting from an empty list
     null_tasks2 = []
     result = delete_at(null_tasks2, 0)
-    print("deleting from empty list ", null_tasks2)
+    print("deleting from empty list ", result)
 
     print("\n=== EDGE CASES ===")
     print("TODO: Demonstrate at least two edge cases.")
