@@ -74,8 +74,6 @@ def main():
     # SMALL DATASET
     # ===============================
 
-    print("\n=== SMALL DATASET TEST ===")
-
     # Create a small sorted dataset
     small_list = [1, 3, 5, 7, 9, 11, 13, 15]
 
@@ -87,9 +85,9 @@ def main():
     linear_result = linear_search(small_list, target)
     binary_result = binary_search(small_list, target)
 
-    print("\nSearching for:", target)
-    print("Linear search index:", linear_result)
-    print("Binary search index:", binary_result)
+    print("\ntarget:", target)
+    print("Linear search ", linear_result)
+    print("Binary search ", binary_result)
 
     # Search for a value that does not exist
     target = 10
@@ -97,9 +95,9 @@ def main():
     linear_result = linear_search(small_list, target)
     binary_result = binary_search(small_list, target)
 
-    print("\nSearching for:", target)
-    print("Linear search index:", linear_result)
-    print("Binary search index:", binary_result)
+    print("\nTarget", target)
+    print("Linear search:", linear_result)
+    print("Binary search:", binary_result)
 
     # -1 means that the value was not found.
 
@@ -107,8 +105,6 @@ def main():
     # ===============================
     # LARGE DATASET
     # ===============================
-
-    print("\n=== LARGE DATASET TEST ===")
 
     # Create a sorted dataset containing 1,000,000 numbers
     large_list = list(range(1, 1000001))
@@ -123,9 +119,9 @@ def main():
     linear_result = linear_search(large_list, target)
     binary_result = binary_search(large_list, target)
 
-    print("\nSearching for:", target)
-    print("Linear search index:", linear_result)
-    print("Binary search index:", binary_result)
+    print("\ntarget", target)
+    print("Linear search:", linear_result)
+    print("Binary search:", binary_result)
 
     # Linear search has O(n) time complexity, so it may
     # need to check almost every item.
@@ -141,7 +137,6 @@ def main():
     # EDGE CASES
     # ===============================
 
-    print("\n=== EDGE CASE TESTS ===")
 
     # Edge case 1: Empty list
     empty_list = []
