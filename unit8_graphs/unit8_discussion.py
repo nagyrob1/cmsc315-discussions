@@ -17,23 +17,38 @@ from collections import deque
 
 
 def bfs(graph, start):
-    """
-    TODO (Student):
-    Implement Breadth-First Search (BFS).
+    if start not in graph:
+        return []
 
-    Requirements:
-    - Use a queue to manage traversal order.
-    - Track visited nodes to prevent revisiting nodes.
-    - Visit nodes level by level.
-    - Return the order in which nodes were visited.
+    visited = {start}
 
-    Add comments explaining:
-    - Why a queue is used.
-    - Why neighbors are added to the queue.
-    - How BFS differs from depth-first traversal.
-    """
+    queue = deque([start])
+    order = []
 
-    pass
+    while queue:
+
+        node = queue.popleft()
+        order.append(node)
+
+        for neighbor in graph[node]:
+            if neighbor not in visited:
+                visited.add(neighbor)
+
+                queue.append(neighbor)
+
+def print_graph(graph):
+
+    for node, neighbors in graph.items():
+        print(f"  {node:<6} -> {', '.join(neighbors) if neighbors else '(no connections)'}")
+
+def add_edge(graph,a,b):
+
+    graph.setdefualt(a, [])
+    graph.setdefualt(b, [])
+    if b not in graph[a]:
+        graph[a].append(b)
+    if a not in graph[b]:
+        graph[b].append(a)
 
 
 def main():
@@ -42,50 +57,77 @@ def main():
     # ===============================
     # TODO (Student): CREATE A GRAPH
     # ===============================
-    #
-    # Requirements:
-    # 1. Create a graph using an adjacency list.
-    # 2. Include at least 6 nodes.
-    # 3. Include multiple connections between nodes.
-    # 4. Clearly display the graph structure.
-    # 5. Use comments to explain what the nodes and edges represent.
-
+    graph = {
+        "Alice": ["Bob", "Carol"],
+        "Bob":   ["Alice", "Dave", "Eve"],
+        "Carol": ["Alice", "Eve"],
+        "Dave":  ["Bob", "Frank"],
+        "Eve":   ["Bob", "Carol", "Frank"],
+        "Frank": ["Dave", "Eve"],
+    }
     print("\n=== GRAPH STRUCTURE ===")
-    print("TODO: Create and display a graph.")
+    print_graph(graph)
 
     # ===============================
-    # TODO (Student): BFS TRAVERSAL
+    # BFS TRAVERSAL
     # ===============================
-    #
-    # Requirements:
-    # 1. Select a starting node.
-    # 2. Perform BFS traversal.
-    # 3. Display the traversal order.
-    # 4. Use comments to explain how BFS visits nodes level by level.
-    # 5. Add at least one additional node or edge
-    #    and demonstrate the updated traversal.
-
+    start = "Alice"
     print("\n=== BFS TRAVERSAL ===")
-    print("TODO: Perform and explain BFS traversal.")
+    print(f"Starting at: {start}")
+    print(f"Visit order: {' -> '.join(bfs(graph, start))}")
+    # Explanation of the levels from Alice:
+    #   Level 0: Alice
+    #   Level 1: Bob, Carol      (Alice's direct friends)
+    #   Level 2: Dave, Eve       (friends of Bob/Carol)
+    #   Level 3: Frank           (friend of Dave/Eve)
+    # BFS finishes each level before moving on to the next one.
+    print("Levels: Alice | Bob, Carol | Dave, Eve | Frank")
+
+    # Add a new node and edges, then traverse again.
+    print("\n--- After adding Grace (friends with Carol and Frank) ---")
+    add_edge(graph, "Grace", "Carol")
+    add_edge(graph, "Grace", "Frank")
+    print_graph(graph)
+    print(f"Visit order: {' -> '.join(bfs(graph, start))}")
+    # Grace is 2 steps from Alice (via Carol), so she now appears in
+    # level 2 alongside Dave and Eve, before Frank at level 3.
 
     # ===============================
-    # TODO (Student): EDGE CASES
+    # EDGE CASES
     # ===============================
-    #
-    # Demonstrate at least two edge cases.
-    #
-    # Example ideas:
-    # - Start from a different node
-    # - Use a disconnected graph
-    # - Handle a missing start node safely
-    # - Graph containing only one node
-    # - Empty graph
-    #
-    # Explain what happens in each case.
-
     print("\n=== EDGE CASE TESTS ===")
-    print("TODO: Demonstrate and explain edge cases.")
 
+    # 1. Starting from a different node
+    print("\n1) Different start node (Frank):")
+    print(f"   {' -> '.join(bfs(graph, 'Frank'))}")
+    print("   The order changes because 'distance' is measured from Frank now.")
+
+    # 2. Disconnected graph
+    disconnected = {
+        "A": ["B"],
+        "B": ["A"],
+        "C": ["D"],
+        "D": ["C"],
+    }
+    print("\n2) Disconnected graph (A-B and C-D are separate groups):")
+    print(f"   BFS from A: {bfs(disconnected, 'A')}")
+    print("   Only A and B are reached. BFS can only follow existing edges,")
+    print("   so C and D are never visited.")
+
+    # 3. Missing start node
+    print("\n3) Start node not in graph ('Zed'):")
+    print(f"   {bfs(graph, 'Zed')}")
+    print("   Returns an empty list instead of raising a KeyError.")
+
+    # 4. Single-node graph
+    print("\n4) Graph with a single node:")
+    print(f"   {bfs({'Solo': []}, 'Solo')}")
+    print("   Only the start node is visited since it has no neighbors.")
+
+    # 5. Empty graph
+    print("\n5) Empty graph:")
+    print(f"   {bfs({}, 'Alice')}")
+    print("   No nodes exist, so the result is an empty list.")
 
 
 if __name__ == "__main__":
